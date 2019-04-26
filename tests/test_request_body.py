@@ -8,12 +8,11 @@ import datetime
 import functools
 from collections import deque
 
-import falcon
 import jsonschema
 import pytest
 
-from falcon_oas.oas.request_body import unmarshal_request_body
-from falcon_oas.oas.schema.unmarshalers import SchemaUnmarshaler
+from oas.request_body import unmarshal_request_body
+from oas.schema.unmarshalers import SchemaUnmarshaler
 
 
 @pytest.fixture
@@ -50,17 +49,6 @@ def test_missing_optional(mocker, unmarshal):
     result = unmarshal(request_body, request_body_spec_dict)
 
     assert result == (None, None)
-
-
-def test_media_error(mocker, unmarshal):
-    request_body = mocker.MagicMock()
-    type(request_body).media = mocker.PropertyMock(
-        side_effect=falcon.HTTPBadRequest
-    )
-    request_body_spec_dict = {'content': {}}
-
-    with pytest.raises(falcon.HTTPBadRequest):
-        unmarshal(request_body, request_body_spec_dict)
 
 
 def test_undocumented_media_type_schema(mocker, unmarshal, media_type):

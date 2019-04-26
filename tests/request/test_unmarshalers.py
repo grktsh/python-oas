@@ -8,9 +8,9 @@ import datetime
 
 import pytest
 
-from falcon_oas.oas.exceptions import UnmarshalError
-from falcon_oas.oas.request.unmarshalers import unmarshal_request
-from falcon_oas.oas.schema.unmarshalers import SchemaUnmarshaler
+from oas.exceptions import UnmarshalError
+from oas.request.unmarshalers import unmarshal_request
+from oas.schema.unmarshalers import SchemaUnmarshaler
 
 
 @pytest.fixture

@@ -11,8 +11,8 @@ import jsonschema
 import pytest
 import pytz
 
-from falcon_oas.oas.schema.formats import default_formats
-from falcon_oas.oas.schema.formats import Formats
+from oas.schema.formats import default_formats
+from oas.schema.formats import Formats
 
 
 @pytest.mark.parametrize(

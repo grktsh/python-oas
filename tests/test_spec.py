@@ -6,10 +6,10 @@ from __future__ import unicode_literals
 
 import pytest
 
-from falcon_oas.oas.exceptions import UndocumentedMediaType
-from falcon_oas.oas.spec import _get_base_path
-from falcon_oas.oas.spec import _get_security
-from falcon_oas.oas.spec import create_spec_from_dict
+from oas.exceptions import UndocumentedMediaType
+from oas.spec import _get_base_path
+from oas.spec import _get_security
+from oas.spec import create_spec_from_dict
 
 
 @pytest.fixture

@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import pytest
 
-from falcon_oas.oas.parameters.deserializers import deserialize_parameter
+from oas.parameters.deserializers import deserialize_parameter
 
 
 def test_deserialize_parameter_default(mocker):

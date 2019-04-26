@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 import jsonschema
 
-from falcon_oas.oas.exceptions import UnmarshalError
+from oas.exceptions import UnmarshalError
 
 
 def test_unmarshal_error():

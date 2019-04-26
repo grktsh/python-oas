@@ -8,9 +8,9 @@ import datetime
 
 import pytest
 
-from falcon_oas.oas.exceptions import ValidationError
-from falcon_oas.oas.schema.formats import Formats
-from falcon_oas.oas.schema.unmarshalers import SchemaUnmarshaler
+from oas.exceptions import ValidationError
+from oas.schema.formats import Formats
+from oas.schema.unmarshalers import SchemaUnmarshaler
 
 
 def test_unmarshal_validation_error():
