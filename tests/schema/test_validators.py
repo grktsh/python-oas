@@ -6,9 +6,9 @@ from __future__ import unicode_literals
 
 import pytest
 
-from falcon_oas.oas.schema.formats import default_formats
-from falcon_oas.oas.schema.validators import SchemaValidator
-from falcon_oas.oas.schema.validators import ValidationError
+from oas.schema.formats import default_formats
+from oas.schema.validators import SchemaValidator
+from oas.schema.validators import ValidationError
 
 
 @pytest.fixture

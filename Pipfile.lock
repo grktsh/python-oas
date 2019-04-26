@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "05ea843fe6327c2ce52c8c0f95e2f205ed0c1edaff1bd5194a89d1fbe64ae430"
+            "sha256": "6ad1aaf838550bc17bd5dd65636f6feebab9f1357b5ad6fdc0002b0626284880"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -124,21 +124,6 @@
             ],
             "version": "==1.6.0"
         },
-        "falcon": {
-            "hashes": [
-                "sha256:0a66b33458fab9c1e400a9be1a68056abda178eb02a8cb4b8f795e9df20b053b",
-                "sha256:3981f609c0358a9fcdb25b0e7fab3d9e23019356fb429c635ce4133135ae1bc4"
-            ],
-            "version": "==1.4.1"
-        },
-        "falcon-oas": {
-            "editable": true,
-            "extras": [
-                "format",
-                "test"
-            ],
-            "path": "."
-        },
         "identify": {
             "hashes": [
                 "sha256:244e7864ef59f0c7c50c6db73f58564151d91345cd9b76ed793458953578cadd",
@@ -187,6 +172,14 @@
                 "sha256:ad8259494cf1c9034539f6cced78a1da4840a4b157e23640bc4a0c0546b0cb7a"
             ],
             "version": "==1.3.3"
+        },
+        "oas": {
+            "editable": true,
+            "extras": [
+                "format",
+                "test"
+            ],
+            "path": "."
         },
         "pkginfo": {
             "hashes": [
@@ -266,13 +259,6 @@
             ],
             "version": "==1.28.0"
         },
-        "python-mimeparse": {
-            "hashes": [
-                "sha256:76e4b03d700a641fd7761d3cd4fdbbdcd787eade1ebfac43f877016328334f78",
-                "sha256:a295f03ff20341491bfe4717a39cd0a8cc9afad619ba44b77e86b0ab8a2b8282"
-            ],
-            "version": "==1.6.0"
-        },
         "pytz": {
             "hashes": [
                 "sha256:303879e36b721603cc54604edcac9d20401bdbe31e1e4fdee5b9f98d5d31dfda",
@@ -319,10 +305,10 @@
         },
         "rfc3986": {
             "hashes": [
-                "sha256:5ad82677b02b88c8d24f6511b4ee9baa5e7da675599b479fbbc5c9c578b5b737",
-                "sha256:bc3ae4b7cd88a99eff2d3900fcb858d44562fd7f273fc07aeef568b9bb6fc4e1"
+                "sha256:2cb285760d8ed6683f9a242686961918d555f6783027d596cb82df51bfa0f9ca",
+                "sha256:a69146f5014a7da1fed9d375c99f5fe2782a27c0e75c778a4083fe954abbde42"
             ],
-            "version": "==1.2.0"
+            "version": "==1.3.1"
         },
         "setuptools-scm": {
             "hashes": [
@@ -370,10 +356,10 @@
         },
         "virtualenv": {
             "hashes": [
-                "sha256:6aebaf4dd2568a0094225ebbca987859e369e3e5c22dc7d52e5406d504890417",
-                "sha256:984d7e607b0a5d1329425dd8845bd971b957424b5ba664729fab51ab8c11bc39"
+                "sha256:15ee248d13e4001a691d9583948ad3947bcb8a289775102e4c4aa98a8b7a6d73",
+                "sha256:bfc98bb9b42a3029ee41b96dc00a34c2f254cbf7716bec824477b2c82741a5c4"
             ],
-            "version": "==16.4.3"
+            "version": "==16.5.0"
         },
         "webencodings": {
             "hashes": [

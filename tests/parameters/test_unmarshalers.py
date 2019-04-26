@@ -11,8 +11,8 @@ from collections import deque
 import jsonschema
 import pytest
 
-from falcon_oas.oas.parameters.unmarshalers import unmarshal_parameters
-from falcon_oas.oas.schema.unmarshalers import SchemaUnmarshaler
+from oas.parameters.unmarshalers import unmarshal_parameters
+from oas.schema.unmarshalers import SchemaUnmarshaler
 
 
 @pytest.fixture
