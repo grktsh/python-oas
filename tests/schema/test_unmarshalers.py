@@ -98,7 +98,7 @@ def test_unmarshal_object():
 @pytest.mark.parametrize(
     'properties,additional_properties,expected',
     [
-        (None, None, {}),
+        (None, None, {'x': 'foo'}),
         (None, True, {'x': 'foo'}),
         (None, {}, {'x': 'foo'}),
         (None, {'type': 'string'}, {'x': 'foo'}),

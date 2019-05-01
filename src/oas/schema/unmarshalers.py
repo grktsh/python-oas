@@ -83,7 +83,7 @@ class SchemaUnmarshaler(object):
                     continue
             result[name] = self._unmarshal(value, sub_schema)
 
-        additional_properties = schema.get('additionalProperties')
+        additional_properties = schema.get('additionalProperties', True)
         if isinstance(additional_properties, dict):
             for k, v in iteritems(instance):
                 if k not in properties:
