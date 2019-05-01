@@ -98,14 +98,19 @@ def test_unmarshal_object():
 @pytest.mark.parametrize(
     'properties,additional_properties,expected',
     [
-        (None, None, {'x': 'foo'}),
-        (None, True, {'x': 'foo'}),
-        (None, {}, {'x': 'foo'}),
-        (None, {'type': 'string'}, {'x': 'foo'}),
-        ({'x': {'type': 'string'}}, None, {'x': 'foo'}),
-        ({'x': {'type': 'string'}}, True, {'x': 'foo'}),
-        ({'x': {'type': 'string'}}, {}, {'x': 'foo'}),
-        ({'x': {'type': 'string'}}, {'type': 'string'}, {'x': 'foo'}),
+        (None, None, {'x': 'foo', 'y': 'bar'}),
+        (None, True, {'x': 'foo', 'y': 'bar'}),
+        (None, {}, {'x': 'foo', 'y': 'bar'}),
+        (None, {'type': 'string'}, {'x': 'foo', 'y': 'bar'}),
+        ({'x': {'type': 'string'}}, None, {'x': 'foo', 'y': 'bar'}),
+        ({'x': {'type': 'string'}}, True, {'x': 'foo', 'y': 'bar'}),
+        ({'x': {'type': 'string'}}, False, {'x': 'foo'}),
+        ({'x': {'type': 'string'}}, {}, {'x': 'foo', 'y': 'bar'}),
+        (
+            {'x': {'type': 'string'}},
+            {'type': 'string'},
+            {'x': 'foo', 'y': 'bar'},
+        ),
     ],
 )
 def test_unmarshal_object_properties_and_additional_properties(
@@ -118,6 +123,8 @@ def test_unmarshal_object_properties_and_additional_properties(
         schema['additionalProperties'] = additional_properties
 
     instance = {'x': 'foo'}
+    if additional_properties is not False:
+        instance['y'] = 'bar'
     unmarshaled = SchemaUnmarshaler().unmarshal(instance, schema)
     assert unmarshaled == expected
 
