@@ -1,6 +1,10 @@
 python-oas
 ==========
 
+.. image:: https://img.shields.io/pypi/v/oas.svg
+   :alt: PyPI
+   :target: https://pypi.org/project/oas
+
 .. image:: https://img.shields.io/travis/grktsh/python-oas/master.svg
    :alt: Travis
    :target: https://travis-ci.org/grktsh/python-oas
