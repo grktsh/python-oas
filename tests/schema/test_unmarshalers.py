@@ -99,7 +99,7 @@ def test_unmarshal_object():
     'properties,additional_properties,expected',
     [
         (None, None, {}),
-        (None, True, {}),
+        (None, True, {'x': 'foo'}),
         (None, {}, {'x': 'foo'}),
         (None, {'type': 'string'}, {'x': 'foo'}),
         ({'x': {'type': 'string'}}, None, {'x': 'foo'}),

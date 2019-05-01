@@ -88,6 +88,10 @@ class SchemaUnmarshaler(object):
             for k, v in iteritems(instance):
                 if k not in properties:
                     result[k] = self._unmarshal(v, additional_properties)
+        elif additional_properties is True:
+            for k, v in iteritems(instance):
+                if k not in properties:
+                    result[k] = v
 
         return result
 
