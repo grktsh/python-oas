@@ -96,25 +96,55 @@ def test_unmarshal_object():
 
 
 @pytest.mark.parametrize(
-    'properties,additional_properties,expected',
+    'properties,additional_properties,instance,expected',
     [
-        (None, None, {'x': 'foo', 'y': 'bar'}),
-        (None, True, {'x': 'foo', 'y': 'bar'}),
-        (None, {}, {'x': 'foo', 'y': 'bar'}),
-        (None, {'type': 'string'}, {'x': 'foo', 'y': 'bar'}),
-        ({'x': {'type': 'string'}}, None, {'x': 'foo', 'y': 'bar'}),
-        ({'x': {'type': 'string'}}, True, {'x': 'foo', 'y': 'bar'}),
-        ({'x': {'type': 'string'}}, False, {'x': 'foo'}),
-        ({'x': {'type': 'string'}}, {}, {'x': 'foo', 'y': 'bar'}),
+        (
+            None,
+            None,
+            {'x': 'foo', 'y': '2020-01-02'},
+            {'x': 'foo', 'y': '2020-01-02'},
+        ),
+        (
+            None,
+            True,
+            {'x': 'foo', 'y': '2020-01-02'},
+            {'x': 'foo', 'y': '2020-01-02'},
+        ),
+        (
+            None,
+            {},
+            {'x': 'foo', 'y': '2020-01-02'},
+            {'x': 'foo', 'y': '2020-01-02'},
+        ),
+        (
+            None,
+            {'type': 'string', 'format': 'date'},
+            {'y': '2020-01-02'},
+            {'y': datetime.date(2020, 1, 2)},
+        ),
         (
             {'x': {'type': 'string'}},
-            {'type': 'string'},
-            {'x': 'foo', 'y': 'bar'},
+            None,
+            {'x': 'foo', 'y': '2020-01-02'},
+            {'x': 'foo', 'y': '2020-01-02'},
+        ),
+        (
+            {'x': {'type': 'string'}},
+            True,
+            {'x': 'foo', 'y': '2020-01-02'},
+            {'x': 'foo', 'y': '2020-01-02'},
+        ),
+        ({'x': {'type': 'string'}}, False, {'x': 'foo'}, {'x': 'foo'}),
+        (
+            {'x': {'type': 'string'}},
+            {'type': 'string', 'format': 'date'},
+            {'x': 'foo', 'y': '2020-01-02'},
+            {'x': 'foo', 'y': datetime.date(2020, 1, 2)},
         ),
     ],
 )
 def test_unmarshal_object_properties_and_additional_properties(
-    properties, additional_properties, expected
+    properties, additional_properties, instance, expected
 ):
     schema = {'type': 'object'}
     if properties is not None:
@@ -122,9 +152,6 @@ def test_unmarshal_object_properties_and_additional_properties(
     if additional_properties is not None:
         schema['additionalProperties'] = additional_properties
 
-    instance = {'x': 'foo'}
-    if additional_properties is not False:
-        instance['y'] = 'bar'
     unmarshaled = SchemaUnmarshaler().unmarshal(instance, schema)
     assert unmarshaled == expected
 
