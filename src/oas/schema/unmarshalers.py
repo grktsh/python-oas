@@ -71,11 +71,8 @@ class SchemaUnmarshaler(object):
         except KeyError:
             properties = {}
 
-        additional_properties = schema.get('additionalProperties')
-        if isinstance(additional_properties, dict):
-            properties = dict(additional_properties, **properties)
-
         result = {}
+
         for name, sub_schema in iteritems(properties):
             try:
                 value = instance[name]
@@ -85,6 +82,13 @@ class SchemaUnmarshaler(object):
                 except KeyError:
                     continue
             result[name] = self._unmarshal(value, sub_schema)
+
+        additional_properties = schema.get('additionalProperties')
+        if isinstance(additional_properties, dict):
+            for k, v in iteritems(instance):
+                if k not in properties:
+                    result[k] = self._unmarshal(v, additional_properties)
+
         return result
 
     def _unmarshal_primitive(self, instance, schema):

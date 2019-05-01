@@ -100,12 +100,12 @@ def test_unmarshal_object():
     [
         (None, None, {}),
         (None, True, {}),
-        (None, {}, {}),
-        (None, {'x': {'type': 'string'}}, {'x': 'foo'}),
+        (None, {}, {'x': 'foo'}),
+        (None, {'type': 'string'}, {'x': 'foo'}),
         ({'x': {'type': 'string'}}, None, {'x': 'foo'}),
         ({'x': {'type': 'string'}}, True, {'x': 'foo'}),
         ({'x': {'type': 'string'}}, {}, {'x': 'foo'}),
-        ({'x': {'type': 'string'}}, {'x': {'type': 'integer'}}, {'x': 'foo'}),
+        ({'x': {'type': 'string'}}, {'type': 'string'}, {'x': 'foo'}),
     ],
 )
 def test_unmarshal_object_properties_and_additional_properties(
