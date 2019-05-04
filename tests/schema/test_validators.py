@@ -142,3 +142,19 @@ def test_validate_nullable_with_format(validator):
         validator.validate(instance, schema)
     except ValidationError as e:
         pytest.fail('Unexpected error: {}'.format(e))
+
+
+def test_validate_patternproperties_error(validator):
+    schema = {
+        'type': str('object'),
+        'patternProperties': {'^[a-z]+$': {'type': 'string'}},
+        'additionalProperties': False,
+    }
+    instance = {str('foo1'): 'bar'}
+    message = "Additional properties are not allowed ('foo1' was unexpected)"
+
+    with pytest.raises(ValidationError) as exc_info:
+        validator.validate(instance, schema)
+
+    assert len(exc_info.value.errors) == 1
+    assert exc_info.value.errors[0].message == message

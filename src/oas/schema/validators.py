@@ -8,6 +8,7 @@ from jsonschema import validators
 
 from ..exceptions import ValidationError
 
+
 _type_draft4_validator = Draft4Validator.VALIDATORS['type']
 
 
@@ -30,9 +31,29 @@ def _enum_validator(validator, enums, instance, schema):
         yield error
 
 
+_additional_properties_draft4_validator = Draft4Validator.VALIDATORS[
+    'additionalProperties'
+]
+
+
+def _additional_properties_validator(validator, aP, instance, schema):
+    schema = {k: v for k, v in schema.items() if k != 'patternProperties'}
+    for error in _additional_properties_draft4_validator(
+        validator, aP, instance, schema
+    ):
+        yield error
+
+
 _Validator = validators.extend(
-    Draft4Validator, {'type': _type_validator, 'enum': _enum_validator}
+    Draft4Validator,
+    {
+        'type': _type_validator,
+        'enum': _enum_validator,
+        'additionalProperties': _additional_properties_validator,
+    },
 )
+
+del _Validator.VALIDATORS['patternProperties']
 
 
 class SchemaValidator(object):

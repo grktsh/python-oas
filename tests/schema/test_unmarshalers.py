@@ -156,6 +156,18 @@ def test_unmarshal_object_properties_and_additional_properties(
     assert unmarshaled == expected
 
 
+def test_unmarshal_object_ignore_pattern_properties():
+    schema = {
+        'type': 'object',
+        'patternProperties': {'^[a-z]+$': {'type': 'string'}},
+        'additionalProperties': False,
+    }
+    instance = {'foo': 'bar'}
+
+    unmarshaled = SchemaUnmarshaler()._unmarshal(instance, schema)
+    assert unmarshaled == {}
+
+
 def test_unmarshal_all_of():
     schema = {
         'allOf': [
