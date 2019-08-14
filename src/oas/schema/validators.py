@@ -8,30 +8,23 @@ from jsonschema import validators
 
 from ..exceptions import ValidationError
 
-_type_draft4_validator = Draft4Validator.VALIDATORS['type']
 
+def _nullable(base_validator):
+    def _validator(validator, v, instance, schema):
+        if instance is None and schema.get('nullable'):
+            return
+        for error in base_validator(validator, v, instance, schema):
+            yield error
 
-def _type_validator(validator, types, instance, schema):
-    if instance is None and schema.get('nullable'):
-        return
-
-    for error in _type_draft4_validator(validator, types, instance, schema):
-        yield error
-
-
-_enum_draft4_validator = Draft4Validator.VALIDATORS['enum']
-
-
-def _enum_validator(validator, enums, instance, schema):
-    if instance is None and schema.get('nullable'):
-        return
-
-    for error in _enum_draft4_validator(validator, enums, instance, schema):
-        yield error
+    return _validator
 
 
 _Validator = validators.extend(
-    Draft4Validator, {'type': _type_validator, 'enum': _enum_validator}
+    Draft4Validator,
+    {
+        'type': _nullable(Draft4Validator.VALIDATORS['type']),
+        'enum': _nullable(Draft4Validator.VALIDATORS['enum']),
+    },
 )
 
 
