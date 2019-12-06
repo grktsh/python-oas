@@ -77,10 +77,12 @@ def test_deserialize_parameter_parse_success(
     parameters = mocker.MagicMock(**{location: {name: value}})
     parameter_spec_dict = {'schema': {'type': schema_type}}
 
-    result = deserialize_parameter(
+    value, schema = deserialize_parameter(
         parameters, location, name, parameter_spec_dict
     )
-    assert result == (expected_value, parameter_spec_dict['schema'])
+    assert value == expected_value
+    assert isinstance(value, type(expected_value))
+    assert schema == parameter_spec_dict['schema']
 
 
 @pytest.mark.parametrize(
