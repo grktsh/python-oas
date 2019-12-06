@@ -8,7 +8,7 @@ from distutils.util import strtobool
 _parsers = {
     'integer': int,
     'number': float,
-    'boolean': strtobool,
+    'boolean': lambda x: bool(strtobool(x)),
     'string': lambda x: x,
 }
 
