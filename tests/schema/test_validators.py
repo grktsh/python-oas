@@ -70,7 +70,7 @@ def test_validate_format_string_error(validator):
     assert exc_info.value.errors[0].message == message
 
 
-@pytest.mark.parametrize('instance', [-2 ** 31, 0, 2 ** 31 - 1])
+@pytest.mark.parametrize('instance', [-(2 ** 31), 0, 2 ** 31 - 1])
 def test_validate_format_integer(validator, instance):
     schema = {'type': 'integer', 'format': 'int32'}
     try:
@@ -79,7 +79,7 @@ def test_validate_format_integer(validator, instance):
         pytest.fail('Unexpected error: {}'.format(e))
 
 
-@pytest.mark.parametrize('instance', [-2 ** 31 - 1, 2 ** 31])
+@pytest.mark.parametrize('instance', [-(2 ** 31) - 1, 2 ** 31])
 def test_validate_format_integer_error(validator, instance):
     schema = {'type': 'integer', 'format': str('int32')}
     message = "{} is not a 'int32'".format(instance)

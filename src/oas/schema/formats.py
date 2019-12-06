@@ -62,10 +62,10 @@ def bounded(value, min_value, max_value):
 
 
 _register('int32', 'integer', raises=ValueError)(
-    functools.partial(bounded, min_value=-2 ** 31, max_value=2 ** 31 - 1)
+    functools.partial(bounded, min_value=-(2 ** 31), max_value=2 ** 31 - 1)
 )
 _register('int64', 'integer', raises=ValueError)(
-    functools.partial(bounded, min_value=-2 ** 63, max_value=2 ** 63 - 1)
+    functools.partial(bounded, min_value=-(2 ** 63), max_value=2 ** 63 - 1)
 )
 _register('byte', 'string', raises=(ValueError, TypeError))(base64.b64decode)
 _register('binary', 'string', raises=(ValueError, TypeError))(

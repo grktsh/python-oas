@@ -19,10 +19,10 @@ from oas.schema.formats import Formats
     'name,value,expected',
     [
         ('int32', 0, None),
-        ('int32', -2 ** 31, None),
+        ('int32', -(2 ** 31), None),
         ('int32', 2 ** 31 - 1, None),
         ('int64', 0, None),
-        ('int64', -2 ** 63, None),
+        ('int64', -(2 ** 63), None),
         ('int64', 2 ** 63 - 1, None),
         ('byte', base64.b64encode(b'foo'), b'foo'),
         ('binary', '010203', b'\x01\x02\x03'),
@@ -50,9 +50,9 @@ def test_default_checker_success(name, value, expected):
 @pytest.mark.parametrize(
     'name,value',
     [
-        ('int32', -2 ** 31 - 1),
+        ('int32', -(2 ** 31) - 1),
         ('int32', 2 ** 31),
-        ('int64', -2 ** 63 - 1),
+        ('int64', -(2 ** 63) - 1),
         ('int64', 2 ** 63),
         ('byte', 'xxx'),
         ('binary', 'xxx'),
@@ -76,10 +76,10 @@ def test_default_checker_error(name, value):
     'name,value,expected',
     [
         ('int32', 0, None),
-        ('int32', -2 ** 31, None),
+        ('int32', -(2 ** 31), None),
         ('int32', 2 ** 31 - 1, None),
         ('int64', 0, None),
-        ('int64', -2 ** 63, None),
+        ('int64', -(2 ** 63), None),
         ('int64', 2 ** 63 - 1, None),
         ('byte', base64.b64encode(b'foo'), b'foo'),
         ('binary', '010203', b'\x01\x02\x03'),

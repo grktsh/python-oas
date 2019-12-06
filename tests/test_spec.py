@@ -55,7 +55,7 @@ def test_spec_get_operation_request_body_and_security(
 
 
 def test_spec_get_operation_request_body_undocumented_media_type(
-    petstore_dict
+    petstore_dict,
 ):
     spec = create_spec_from_dict(petstore_dict)
 
