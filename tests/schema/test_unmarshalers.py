@@ -159,17 +159,24 @@ def test_unmarshal_object_properties_and_additional_properties(
 def test_unmarshal_all_of():
     schema = {
         'allOf': [
-            {'type': 'object', 'properties': {'id': {'type': 'integer'}}},
-            {'type': 'object', 'properties': {'date': {'type': 'string'}}},
             {
                 'type': 'object',
-                'properties': {'date': {'type': 'string', 'format': 'date'}},
+                'properties': {'from': {'type': 'string', 'format': 'date'}},
+            },
+            {'type': 'object', 'properties': {'from': {'type': 'string'}}},
+            {'type': 'object', 'properties': {'to': {'type': 'string'}}},
+            {
+                'type': 'object',
+                'properties': {'to': {'type': 'string', 'format': 'date'}},
             },
         ]
     }
-    instance = {'id': 2, 'date': '2018-01-02'}
+    instance = {'from': '2018-01-02', 'to': '2018-01-03'}
     unmarshaled = SchemaUnmarshaler().unmarshal(instance, schema)
-    assert unmarshaled == {'id': 2, 'date': datetime.date(2018, 1, 2)}
+    assert unmarshaled == {
+        'from': datetime.date(2018, 1, 2),
+        'to': datetime.date(2018, 1, 3),
+    }
 
 
 def test_unmarshal_all_of_required_only():
