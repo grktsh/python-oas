@@ -9,7 +9,6 @@ import datetime
 
 import jsonschema
 import pytest
-import pytz
 
 from oas.schema.formats import default_formats
 from oas.schema.formats import Formats
@@ -83,7 +82,12 @@ def test_default_checker_error(name, value):
         (
             'date-time',
             '2020-01-02T03:04:05Z',
-            datetime.datetime(2020, 1, 2, 3, 4, 5, tzinfo=pytz.utc),
+            datetime.datetime(2020, 1, 2, 3, 4, 5),
+        ),
+        (
+            'date-time',
+            '2020-01-02T03:04:05+09:00',
+            datetime.datetime(2020, 1, 1, 18, 4, 5),
         ),
         ('uri', 'http://example.com', None),
         ('uri', 'https://example.com', None),
