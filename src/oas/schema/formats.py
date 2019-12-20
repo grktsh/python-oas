@@ -83,9 +83,11 @@ try:
 except ImportError:  # pragma: no cover
     pyrfc3339 = None
 else:
-    _register('date-time', 'string', raises=ValueError)(
-        functools.partial(pyrfc3339.parse, utc=True)
-    )
+
+    @_register('date-time', 'string', raises=ValueError)
+    def parse_date_time(value):
+        return pyrfc3339.parse(value, utc=True).replace(tzinfo=None)
+
 
 try:
     import rfc3986
