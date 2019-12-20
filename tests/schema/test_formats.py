@@ -16,30 +16,26 @@ from oas.schema.formats import Formats
 
 
 @pytest.mark.parametrize(
-    'name,value,expected',
+    'name,value',
     [
-        ('int32', 0, None),
-        ('int32', -(2 ** 31), None),
-        ('int32', 2 ** 31 - 1, None),
-        ('int64', 0, None),
-        ('int64', -(2 ** 63), None),
-        ('int64', 2 ** 63 - 1, None),
-        ('byte', base64.b64encode(b'foo'), b'foo'),
-        ('binary', '010203', b'\x01\x02\x03'),
-        ('date', '2020-01-02', datetime.date(2020, 1, 2)),
-        (
-            'date-time',
-            '2020-01-02T03:04:05Z',
-            datetime.datetime(2020, 1, 2, 3, 4, 5, tzinfo=pytz.utc),
-        ),
-        ('uri', 'http://example.com', None),
-        ('uri', 'https://example.com', None),
-        ('uri', 'https://example.com/', None),
-        ('uri', 'https://example.com/path', None),
-        ('uri', 'https://example.com/path?query#segment', None),
+        ('int32', 0),
+        ('int32', -(2 ** 31)),
+        ('int32', 2 ** 31 - 1),
+        ('int64', 0),
+        ('int64', -(2 ** 63)),
+        ('int64', 2 ** 63 - 1),
+        ('byte', base64.b64encode(b'foo')),
+        ('binary', '010203'),
+        ('date', '2020-01-02'),
+        ('date-time', '2020-01-02T03:04:05Z'),
+        ('uri', 'http://example.com'),
+        ('uri', 'https://example.com'),
+        ('uri', 'https://example.com/'),
+        ('uri', 'https://example.com/path'),
+        ('uri', 'https://example.com/path?query#segment'),
     ],
 )
-def test_default_checker_success(name, value, expected):
+def test_default_checker_success(name, value):
     format_checker = default_formats.format_checker
     try:
         format_checker.check(value, name)
