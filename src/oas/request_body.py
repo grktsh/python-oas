@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import jsonschema
 
-from .exceptions import ValidationError
+from .content.unmarshalers import unmarshal_content
 
 
 def unmarshal_request_body(
@@ -23,26 +23,10 @@ def unmarshal_request_body(
             return None, [error]
         return None, None
 
-    # TODO: Let the validator handle the media error
-    media = request_body.media
-    media_type = request_body.media_type
-    media_type_spec_dict = request_body_spec_dict['content'][media_type]
-    try:
-        unmarshaled = _unmarshal(
-            schema_unmarshaler, media, media_type_spec_dict
-        )
-    except ValidationError as e:
-        for error in e.errors:
-            error.schema_path.extendleft(['schema', media_type, 'content'])
-        return None, e.errors
-    else:
-        return unmarshaled, None
-
-
-def _unmarshal(unmarshaler, media, media_type_spec_dict):
-    try:
-        schema = media_type_spec_dict['schema']
-    except KeyError:
-        return media
-    else:
-        return unmarshaler.unmarshal(media, schema)
+    unmarshaled, errors = unmarshal_content(
+        schema_unmarshaler, request_body, request_body_spec_dict['content']
+    )
+    if errors:
+        for error in errors:
+            error.schema_path.appendleft('content')
+    return unmarshaled, errors

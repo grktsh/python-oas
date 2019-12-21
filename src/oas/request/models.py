@@ -7,58 +7,45 @@ import abc
 
 import six
 
-if six.PY2:  # pragma: no cover
-    abstractproperty = abc.abstractproperty
-else:  # pragma: no cover
-
-    def abstractproperty(f):
-        return property(abc.abstractmethod(f))
+from ..content.models import Content
 
 
 @six.add_metaclass(abc.ABCMeta)
 class RequestParameters(object):
-    @abstractproperty
+    @abc.abstractproperty
     def path(self):
         """Return the path parameters."""
 
-    @abstractproperty
+    @abc.abstractproperty
     def query(self):
         """Return the query parameters."""
 
-    @abstractproperty
+    @abc.abstractproperty
     def header(self):
         """Return the header parameters."""
 
-    @abstractproperty
+    @abc.abstractproperty
     def cookie(self):
         """Return the header parameters."""
 
 
 @six.add_metaclass(abc.ABCMeta)
-class RequestBody(object):
-    @abstractproperty
+class RequestBody(Content):
+    @abc.abstractproperty
     def content_length(self):
         """Return the content length."""
-
-    @abstractproperty
-    def media_type(self):
-        """Return the media type of the request without parameter."""
-
-    @abstractproperty
-    def media(self):
-        """Return deserialized request body."""
 
 
 @six.add_metaclass(abc.ABCMeta)
 class Request(RequestParameters, RequestBody):
-    @abstractproperty
+    @abc.abstractproperty
     def uri_template(self):
         """Return the key of Path Item Object with the base path."""
 
-    @abstractproperty
+    @abc.abstractproperty
     def method(self):
         """Return the HTTP method of Operation Object."""
 
-    @abstractproperty
+    @abc.abstractproperty
     def context(self):
         """Return the request context."""
