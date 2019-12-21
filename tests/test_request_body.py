@@ -14,19 +14,16 @@ import pytest
 from oas.request_body import unmarshal_request_body
 from oas.schema.unmarshalers import SchemaUnmarshaler
 
+MEDIA_TYPE = 'application/json'
+
 
 @pytest.fixture
 def unmarshal():
     return functools.partial(unmarshal_request_body, SchemaUnmarshaler())
 
 
-@pytest.fixture
-def media_type():
-    return 'application/json'
-
-
 def test_missing_required(mocker, unmarshal):
-    request_body = mocker.MagicMock(content_length=0)
+    request_body = mocker.Mock(content_length=0)
     request_body_spec_dict = {'content': {}, 'required': True}
 
     _, errors = unmarshal(request_body, request_body_spec_dict)
@@ -43,7 +40,7 @@ def test_missing_required(mocker, unmarshal):
 
 
 def test_missing_optional(mocker, unmarshal):
-    request_body = mocker.MagicMock(content_length=0)
+    request_body = mocker.Mock(content_length=0)
     request_body_spec_dict = {'content': {}}
 
     result = unmarshal(request_body, request_body_spec_dict)
@@ -51,20 +48,11 @@ def test_missing_optional(mocker, unmarshal):
     assert result == (None, None)
 
 
-def test_undocumented_media_type_schema(mocker, unmarshal, media_type):
-    request_body = mocker.MagicMock(media='foo', media_type=media_type)
-    request_body_spec_dict = {'content': {media_type: {}}}
-
-    result = unmarshal(request_body, request_body_spec_dict)
-
-    assert result == ('foo', None)
-
-
-def test_unmarshal_success(mocker, unmarshal, media_type):
-    request_body = mocker.MagicMock(media='2018-01-02', media_type=media_type)
+def test_unmarshal_content(mocker, unmarshal):
+    request_body = mocker.Mock(media='2018-01-02', media_type=MEDIA_TYPE)
     request_body_spec_dict = {
         'content': {
-            media_type: {'schema': {'type': 'string', 'format': 'date'}}
+            MEDIA_TYPE: {'schema': {'type': 'string', 'format': 'date'}}
         }
     }
     result = unmarshal(request_body, request_body_spec_dict)
@@ -72,13 +60,13 @@ def test_unmarshal_success(mocker, unmarshal, media_type):
     assert result == (datetime.date(2018, 1, 2), None)
 
 
-def test_unmarshal_error(mocker, unmarshal, media_type):
-    request_body = mocker.MagicMock(
-        media=str('2018/01/02'), media_type=media_type
+def test_unmarshal_content_error(mocker, unmarshal):
+    request_body = mocker.Mock(
+        media=str('2018/01/02'), media_type='application/json'
     )
     request_body_spec_dict = {
         'content': {
-            media_type: {'schema': {'type': 'string', 'format': str('date')}}
+            MEDIA_TYPE: {'schema': {'type': 'string', 'format': str('date')}}
         }
     }
     _, errors = unmarshal(request_body, request_body_spec_dict)
@@ -91,6 +79,6 @@ def test_unmarshal_error(mocker, unmarshal, media_type):
     assert error.validator_value == 'date'
     assert error.schema == {'type': 'string', 'format': str('date')}
     assert error.schema_path == deque(
-        ['content', media_type, 'schema', 'format']
+        ['content', MEDIA_TYPE, 'schema', 'format']
     )
     assert error.path == deque([])

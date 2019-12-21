@@ -7,6 +7,8 @@ import abc
 
 import six
 
+from ..content.models import Content
+
 
 @six.add_metaclass(abc.ABCMeta)
 class RequestParameters(object):
@@ -28,18 +30,10 @@ class RequestParameters(object):
 
 
 @six.add_metaclass(abc.ABCMeta)
-class RequestBody(object):
+class RequestBody(Content):
     @abc.abstractproperty
     def content_length(self):
         """Return the content length."""
-
-    @abc.abstractproperty
-    def media_type(self):
-        """Return the media type of the request without parameter."""
-
-    @abc.abstractproperty
-    def media(self):
-        """Return deserialized request body."""
 
 
 @six.add_metaclass(abc.ABCMeta)
