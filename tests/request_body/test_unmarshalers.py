@@ -11,7 +11,7 @@ from collections import deque
 import jsonschema
 import pytest
 
-from oas.request_body import unmarshal_request_body
+from oas.request_body.unmarshalers import unmarshal_request_body
 from oas.schema.unmarshalers import SchemaUnmarshaler
 
 MEDIA_TYPE = 'application/json'

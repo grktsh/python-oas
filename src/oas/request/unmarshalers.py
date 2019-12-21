@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from ..exceptions import UnmarshalError
 from ..parameters.unmarshalers import unmarshal_parameters
-from ..request_body import unmarshal_request_body
+from ..request_body.unmarshalers import unmarshal_request_body
 
 
 def unmarshal_request(schema_unmarshaler, request, operation):
