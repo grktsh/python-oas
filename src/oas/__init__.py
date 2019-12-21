@@ -5,5 +5,7 @@ from __future__ import unicode_literals
 
 from .request.models import Request  # noqa: F401
 from .request.unmarshalers import unmarshal_request  # noqa: F401
+from .response.models import Response  # noqa: F401
+from .response.validators import validate_response  # noqa: F401
 from .schema.unmarshalers import SchemaUnmarshaler  # noqa: F401
 from .spec import create_spec_from_dict  # noqa: F401

@@ -12,6 +12,10 @@ class UndocumentedMediaType(Error):
     pass
 
 
+class UndocumentedResponse(Error):
+    pass
+
+
 class ValidationError(Error):
     def __init__(self, errors):
         self.errors = errors
