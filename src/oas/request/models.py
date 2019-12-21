@@ -7,37 +7,12 @@ import abc
 
 import six
 
-from ..content.models import Content
+from ..parameters.models import Parameters
+from ..request_body.models import RequestBody
 
 
 @six.add_metaclass(abc.ABCMeta)
-class RequestParameters(object):
-    @abc.abstractproperty
-    def path(self):
-        """Return the path parameters."""
-
-    @abc.abstractproperty
-    def query(self):
-        """Return the query parameters."""
-
-    @abc.abstractproperty
-    def header(self):
-        """Return the header parameters."""
-
-    @abc.abstractproperty
-    def cookie(self):
-        """Return the header parameters."""
-
-
-@six.add_metaclass(abc.ABCMeta)
-class RequestBody(Content):
-    @abc.abstractproperty
-    def content_length(self):
-        """Return the content length."""
-
-
-@six.add_metaclass(abc.ABCMeta)
-class Request(RequestParameters, RequestBody):
+class Request(Parameters, RequestBody):
     @abc.abstractproperty
     def uri_template(self):
         """Return the key of Path Item Object with the base path."""

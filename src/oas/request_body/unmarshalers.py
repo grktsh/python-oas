@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import jsonschema
 
-from .content.unmarshalers import unmarshal_content
+from ..content.unmarshalers import unmarshal_content
 
 
 def unmarshal_request_body(
