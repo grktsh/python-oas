@@ -3,6 +3,8 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from collections import Mapping
+
 from six import iteritems
 
 from ..exceptions import ValidationError
@@ -39,16 +41,27 @@ class SchemaUnmarshaler(object):
             # Support nullable value
             return instance
 
-        # TODO: Support other than object
         if 'allOf' in schema:
-            result = {}
-            for sub_schema in schema['allOf']:
-                for k, v in iteritems(self._unmarshal(instance, sub_schema)):
-                    # If ``sub_schema``s have the same property and
-                    # the former unmarshaling has modified the value of the
-                    # property, the former result wins.
-                    if k not in result or result[k] == instance[k]:
-                        result[k] = v
+            sub_schemas = iter(schema['allOf'])
+            result = self._unmarshal(instance, next(sub_schemas))
+            # If the first sub-schema of ``allOf`` unmarshals a ``dict``-like
+            # object, also unmarshal with the remaining sub-schemas.
+            if isinstance(result, Mapping):
+                for sub_schema in sub_schemas:
+                    for k, v in iteritems(
+                        self._unmarshal(instance, sub_schema)
+                    ):
+                        # If ``sub_schema``s have the same property and
+                        # the former unmarshaling has modified the value of the
+                        # property, the former result wins.
+                        if k not in result or result[k] == instance[k]:
+                            result[k] = v
+            # TODO: Handle ``array`` sub-schemas correctly. At this point, an
+            # instance is unmarshaled only based on the first sub-schema. If
+            # ``items`` is NOT present in the first ``array`` sub-schema, then
+            # the array may not be correctly unmarshaled as subsequent
+            # ``array`` sub-schemas, in which ``items`` may be present, are
+            # ignored.
             return result
 
         for sub_schema in schema.get('oneOf') or schema.get('anyOf') or []:
