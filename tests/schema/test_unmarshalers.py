@@ -204,31 +204,6 @@ def test_unmarshal_all_of_array():
     assert unmarshaled == instance
 
 
-def test_unmarshal_all_of_array_without_items_last():
-    schema = {
-        'allOf': [
-            {'type': 'array', 'items': {'type': 'string'}},
-            {'type': 'array', 'minItems': 1},
-        ]
-    }
-    instance = [str('a'), str('b')]
-    unmarshaled = SchemaUnmarshaler().unmarshal(instance, schema)
-    assert unmarshaled == instance
-
-
-@pytest.mark.xfail(reason='not implemented yet')
-def test_unmarshal_all_of_array_without_items_first():
-    schema = {
-        'allOf': [
-            {'type': 'array', 'minItems': 1},
-            {'type': 'array', 'items': {'type': 'string', 'format': 'date'}},
-        ]
-    }
-    instance = [str('2018-01-02')]
-    unmarshaled = SchemaUnmarshaler().unmarshal(instance, schema)
-    assert unmarshaled == [datetime.date(2018, 1, 2)]
-
-
 @pytest.mark.parametrize('schema_type', ['oneOf', 'anyOf'])
 def test_unmarshal_one_of_or_any_of(schema_type):
     schema = {

@@ -56,12 +56,6 @@ class SchemaUnmarshaler(object):
                         # property, the former result wins.
                         if k not in result or result[k] == instance[k]:
                             result[k] = v
-            # TODO: Handle ``array`` sub-schemas correctly. At this point, an
-            # instance is unmarshaled only based on the first sub-schema. If
-            # ``items`` is NOT present in the first ``array`` sub-schema, then
-            # the array may not be correctly unmarshaled as subsequent
-            # ``array`` sub-schemas, in which ``items`` may be present, are
-            # ignored.
             return result
 
         for sub_schema in schema.get('oneOf') or schema.get('anyOf') or []:
