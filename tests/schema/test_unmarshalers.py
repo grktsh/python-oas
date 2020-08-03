@@ -204,6 +204,19 @@ def test_unmarshal_all_of_array():
     assert unmarshaled == instance
 
 
+def test_unmarshal_all_of_array_min_items():
+    schema = {
+        'allOf': [
+            {'type': 'array', 'items': {'type': 'number'}},
+            {'type': 'array', 'items': {}, 'minItems': 2},
+        ]
+    }
+    instance = [1]
+    with pytest.raises(ValidationError) as exc_info:
+        SchemaUnmarshaler().unmarshal(instance, schema)
+    assert exc_info.value.errors[0].message == '[1] is too short'
+
+
 @pytest.mark.parametrize('schema_type', ['oneOf', 'anyOf'])
 def test_unmarshal_one_of_or_any_of(schema_type):
     schema = {
