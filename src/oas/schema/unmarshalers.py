@@ -79,13 +79,8 @@ class SchemaUnmarshaler(object):
             return handler(self, instance, schema)
 
     def _unmarshal_array(self, instance, schema):
-        # If ``items`` is not present, return the instance without further
-        # unmarshaling.
-        return (
-            [self._unmarshal(x, schema['items']) for x in instance]
-            if 'items' in schema
-            else instance
-        )
+        # ``items`` MUST be present if the ``type`` is ``array``.
+        return [self._unmarshal(x, schema['items']) for x in instance]
 
     def _unmarshal_object(self, instance, schema):
         try:

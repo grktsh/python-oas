@@ -74,13 +74,6 @@ def test_unmarshal_array():
     ]
 
 
-def test_unmarshal_array_without_items():
-    schema = {'type': 'array'}
-    instance = ['2018-01-02', '2018-02-03', '2018-03-04']
-    unmarshaled = SchemaUnmarshaler().unmarshal(instance, schema)
-    assert unmarshaled == instance
-
-
 def test_unmarshal_object():
     schema = {
         'type': 'object',
