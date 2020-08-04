@@ -3,8 +3,6 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from collections import Mapping
-
 from six import iteritems
 
 from ..exceptions import ValidationError
@@ -44,9 +42,9 @@ class SchemaUnmarshaler(object):
         if 'allOf' in schema:
             sub_schemas = iter(schema['allOf'])
             result = self._unmarshal(instance, next(sub_schemas))
-            # If the first sub-schema of ``allOf`` unmarshals a ``dict``-like
-            # object, also unmarshal with the remaining sub-schemas.
-            if isinstance(result, Mapping):
+            # If the first sub-schema of ``allOf`` specifies an object, also
+            # unmarshal the remaining sub-schemas and merge the results.
+            if schema['allOf'][0].get('type', 'object') == 'object':
                 for sub_schema in sub_schemas:
                     for k, v in iteritems(
                         self._unmarshal(instance, sub_schema)
