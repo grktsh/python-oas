@@ -39,16 +39,21 @@ class SchemaUnmarshaler(object):
             # Support nullable value
             return instance
 
-        # TODO: Support other than object
         if 'allOf' in schema:
-            result = {}
-            for sub_schema in schema['allOf']:
-                for k, v in iteritems(self._unmarshal(instance, sub_schema)):
-                    # If ``sub_schema``s have the same property and
-                    # the former unmarshaling has modified the value of the
-                    # property, the former result wins.
-                    if k not in result or result[k] == instance[k]:
-                        result[k] = v
+            sub_schemas = iter(schema['allOf'])
+            result = self._unmarshal(instance, next(sub_schemas))
+            # If the first sub-schema of ``allOf`` specifies an object, also
+            # unmarshal the remaining sub-schemas and merge the results.
+            if schema['allOf'][0].get('type', 'object') == 'object':
+                for sub_schema in sub_schemas:
+                    for k, v in iteritems(
+                        self._unmarshal(instance, sub_schema)
+                    ):
+                        # If ``sub_schema``s have the same property and
+                        # the former unmarshaling has modified the value of the
+                        # property, the former result wins.
+                        if k not in result or result[k] == instance[k]:
+                            result[k] = v
             return result
 
         for sub_schema in schema.get('oneOf') or schema.get('anyOf') or []:
