@@ -5,12 +5,12 @@ python-oas
    :alt: PyPI
    :target: https://pypi.org/project/oas
 
-.. image:: https://img.shields.io/travis/grktsh/python-oas/master.svg
-   :alt: Travis
-   :target: https://travis-ci.org/grktsh/python-oas
+.. image:: https://github.com/grktsh/python-oas/workflows/CI/badge.svg
+   :alt: CI
+   :target: https://github.com/grktsh/python-oas/actions
 
-.. image:: https://img.shields.io/codecov/c/github/grktsh/python-oas/master.svg
-   :alt: Codecov
+.. image:: https://codecov.io/gh/grktsh/python-oas/branch/master/graph/badge.svg
+   :alt: Coverage
    :target: https://codecov.io/gh/grktsh/python-oas
 
 Prerequisites
