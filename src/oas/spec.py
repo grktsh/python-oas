@@ -9,7 +9,7 @@ import jsonref
 
 try:
     from functools import lru_cache
-except ImportError:  # pragma: no cover
+except ImportError:
     from functools32 import lru_cache
 from six.moves.urllib_parse import urlparse
 

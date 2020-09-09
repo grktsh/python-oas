@@ -2,6 +2,7 @@
 *.egg-info/
 
 /.coverage
+/.coverage.*
 /.tox/
 /build/
 /dist/
