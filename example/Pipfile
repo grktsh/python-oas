@@ -9,7 +9,7 @@ pytest = "*"
 [packages]
 flask = "~=1.1"
 oas = {editable = true, path = "./.."}
-pyyaml = "~=5.3"
+pyyaml = "~=5.4"
 
 [requires]
 python_version = "3.8"
