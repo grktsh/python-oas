@@ -246,6 +246,36 @@ def test_unmarshal_all_of_primitive_string_enum():
 
 
 @pytest.mark.parametrize('schema_type', ['oneOf', 'anyOf'])
+def test_unmarshal_all_of_one_of_or_any_of(schema_type):
+    schema = {
+        'allOf': [
+            {schema_type: [{'type': 'string'}, {'type': 'number'}]},
+            {'type': 'string'},
+        ]
+    }
+    instance = 'a'
+    unmarshaled = SchemaUnmarshaler().unmarshal(instance, schema)
+    assert unmarshaled == instance
+
+
+def test_unmarshal_all_of_all_of():
+    schema = {
+        'allOf': [
+            {
+                'allOf': [
+                    {'type': 'string'},
+                    {'type': 'string', 'enum': ['a', 'b']},
+                ]
+            },
+            {'type': 'string', 'enum': ['a']},
+        ]
+    }
+    instance = 'a'
+    unmarshaled = SchemaUnmarshaler().unmarshal(instance, schema)
+    assert unmarshaled == instance
+
+
+@pytest.mark.parametrize('schema_type', ['oneOf', 'anyOf'])
 def test_unmarshal_one_of_or_any_of(schema_type):
     schema = {
         schema_type: [
