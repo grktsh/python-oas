@@ -42,9 +42,9 @@ class SchemaUnmarshaler(object):
         if 'allOf' in schema:
             sub_schemas = iter(schema['allOf'])
             result = self._unmarshal(instance, next(sub_schemas))
-            # If the first sub-schema of ``allOf`` specifies an object, also
-            # unmarshal the remaining sub-schemas and merge the results.
-            if schema['allOf'][0].get('type', 'object') == 'object':
+            # If ``result`` is a dict, then the sub-schema specify objects, so
+            # also unmarshal the remaining sub-schemas and merge the results.
+            if isinstance(result, dict):
                 for sub_schema in sub_schemas:
                     for k, v in iteritems(
                         self._unmarshal(instance, sub_schema)
